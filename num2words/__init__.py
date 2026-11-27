@@ -17,6 +17,8 @@
 
 from __future__ import unicode_literals
 
+from decimal import Decimal
+
 from . import (lang_AM, lang_AR, lang_AZ, lang_BE, lang_BN, lang_CA, lang_CE,
                lang_CS, lang_CY, lang_DA, lang_DE, lang_EN, lang_EN_IN,
                lang_EN_NG, lang_EO, lang_ES, lang_ES_CO, lang_ES_CR,
@@ -107,7 +109,7 @@ def num2words(number, ordinal=False, lang='en', to='cardinal', **kwargs):
     converter = CONVERTER_CLASSES[lang]
 
     if isinstance(number, str):
-        number = converter.str_to_number(number)
+        number = getattr(converter, 'str_to_number', Decimal)(number)
 
     # backwards compatible
     if ordinal:
