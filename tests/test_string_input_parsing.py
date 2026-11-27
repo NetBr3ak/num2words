@@ -42,9 +42,16 @@ class StringInputParsingTest(unittest.TestCase):
         script = Path(__file__).resolve().parents[1] / 'bin' / 'num2words'
         env = os.environ.copy()
         env['PYTHONIOENCODING'] = 'utf-8'
+        # A cold Python cache may expose warnings from the CLI dependency.
+        # Do not warm it between the reference import and the actual commands.
+        env['PYTHONDONTWRITEBYTECODE'] = '1'
         env['PYTHONPATH'] = os.pathsep.join(
             path for path in (str(script.parent.parent), env.get('PYTHONPATH'))
             if path
+        )
+        dependency = subprocess.run(
+            [sys.executable, '-c', 'import docopt'], env=env, check=True,
+            capture_output=True, text=True, encoding='utf-8',
         )
         for language in ('fa', 'id', 'vi'):
             for number in ('1', '21', '1.25'):
@@ -59,4 +66,4 @@ class StringInputParsingTest(unittest.TestCase):
                         result.stdout,
                         num2words(Decimal(number), lang=language) + '\n',
                     )
-                    self.assertEqual(result.stderr, '')
+                    self.assertEqual(result.stderr, dependency.stderr)
