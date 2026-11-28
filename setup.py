@@ -65,7 +65,7 @@ setup(
     version=find_version("bin/num2words"),
     description='Modules to convert numbers to words. Easily extensible.',
     long_description=LONG_DESC,
-    long_description_content_type="text/markdown",
+    long_description_content_type="text/x-rst",
     license='LGPL',
     author='Taro Ogawa <tso at users sourceforge net>',
     author_email='tos@users.sourceforge.net',

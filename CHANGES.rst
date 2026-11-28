@@ -19,7 +19,7 @@ Version 0.5.14 -- 2024/12/16
 
 
 Version 0.5.13 -- 2023/10/18
----------------------------
+----------------------------
 
 * Fix a problem in Brazilian Portuguese code referred to thousands when the hundreds are exact. (#421)
 * Fix issue with the hundreds of millions, billions, ... when the hundreds of those are exact. (#436)
